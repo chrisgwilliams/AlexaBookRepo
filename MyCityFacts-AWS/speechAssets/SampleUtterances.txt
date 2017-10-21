@@ -1,1 +1,41 @@
+GetMyCityFactIntent Fact
+GetMyCityFactIntent Give me a fact.
+GetMyCityFactIntent Tell me a fact.
+GetMyCityFactIntent I’d like a fact.
+GetMyCityFactIntent City Fact
+GetMyCityFactIntent Give me a city fact.
+GetMyCityFactIntent Tell me a city fact.
+GetMyCityFactIntent I’d like a city fact.
+GetMyCityFactIntent Tell me about MyCity.
+GetMyCityFactIntent Tell me something.
+GetMyCityFactIntent Tell me something about MyCity.
+GetMyCityFactIntent Hit me with a fact.
+GetMyCityFactIntent Share a fact with me.
+GetMyCityFactIntent Share a city fact with me.
+GetMyCityFactIntent Surprise me.
 
+AMAZON.HelpIntent What do I do?
+AMAZON.HelpIntent What?
+AMAZON.HelpIntent What do I say?
+AMAZON.HelpIntent How does this work?
+AMAZON.HelpIntent How do I get a fact?
+AMAZON.HelpIntent Help me get a city fact.
+AMAZON.HelpIntent I don’t know what to do.
+AMAZON.HelpIntent Directions
+AMAZON.HelpIntent Huh?
+AMAZON.HelpIntent I don’t understand.
+AMAZON.HelpIntent What am I supposed to say?
+AMAZON.HelpIntent Help
+AMAZON.HelpIntent Is this thing on?
+
+AMAZON.StopIntent Stop
+AMAZON.StopIntent Quit
+AMAZON.StopIntent Exit
+AMAZON.StopIntent Finish
+AMAZON.StopIntent I’m done
+AMAZON.StopIntent Shut Up
+AMAZON.StopIntent Goodbye
+
+AMAZON.CancelIntent Cancel
+AMAZON.CancelIntent Abort
+AMAZON.CancelIntent Nevermind
