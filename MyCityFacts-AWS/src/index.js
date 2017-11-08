@@ -9,29 +9,30 @@ exports.handler = function(event, context, callback) {
 
 var handlers = {
     'LaunchRequest': function () {
-        this.emit('GetNewMyCityFactIntent');
+        this.emit('AMAZON.HelpIntent');
     },
 
-    'GetNewMyCityFactIntent': function () {
+    'GetMyCityFactIntent': function () {
         var say = 'Here is your fact. ' + getRandomMyCityFact();
         this.response.speak(say);
         this.emit(':responseReady');
     },
 
-    'AMAZON.HelpIntent': function () {
-        this.response.speak('you can ask for a fact by saying, tell me a fact.');
-        this.response.listen('try again');
-    },
-    
     'AMAZON.CancelIntent': function () {
-        this.response.speak('Goodbye')
-        this.emit(':responseReady');
+        this.response.speak('Goodbye');
+        this.emit('AMAZON.StopIntent');
     },
     
     'AMAZON.StopIntent': function () {
         this.response.speak('Goodbye');
         this.emit(':responseReady');
-    }
+    },
+
+    'AMAZON.HelpIntent': function () {
+        this.response.speak('you can ask for a fact by saying, tell me a fact.');
+        this.response.listen();
+        this.emit(':responseReady');
+    }    
 };
 
 function getRandomMyCityFact() {
@@ -45,7 +46,8 @@ function getRandomMyCityFact() {
                    'MyCity is home to 237 pizza restaurants, 9 fast food establishments, and 1 frozen banana stand, which is open from the beginning of July to the end of September.',
                    'One of the prettiest places on Earth, MyCity has four perfect seasons of exactly 3 months each. The leaves change every fall, and winter offers exactly 22.4 inches of snowfall every year. Average summer temp is 76.8, every year.',
                    'The Mascots are the official football team of MyCity. This is also the name of the local baseball team, basketball team, and soccer team.'
-                  ]
+                  ];
     
-    return(myFacts[Math.floor(Math.random() * facts.length)]);
+    return(myFacts[Math.floor(Math.random() * myFacts.length)]);
 }
+
