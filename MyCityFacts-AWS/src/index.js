@@ -29,9 +29,9 @@ var handlers = {
     },
 
     'AMAZON.HelpIntent': function () {
-        this.response.speak('you can ask for a fact by saying, tell me a fact.');
-        this.response.listen();
-        this.emit(':responseReady');
+        var speechOutput = 'you can ask for a fact by saying, tell me a fact.';
+        var repromptSpeech = 'Try it! Just say tell me a fact.'
+        this.emit(':ask', speechOutput, repromptSpeech);
     }    
 };
 
