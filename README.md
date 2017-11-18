@@ -1,5 +1,5 @@
 # AlexaBookRepo
-Files for my book: Beginning Alexa Skills Development
+Files for my book: Beginning Alexa Skills Development(O'Reilly)
 
 The projects in this repo include:
 
