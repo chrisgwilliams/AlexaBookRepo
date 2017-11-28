@@ -9,21 +9,23 @@ namespace MyCityFacts_AZURE.Controllers
 {
     public class MyCityFactsController : ApiController
     {
+        String speech = "";
+        String reprompt = "";
+
         [HttpPost, Route("api/alexa/MyCityFacts")]
-        public dynamic GetMyCityFacts (dynamic request)
+        public dynamic HandleRequest (dynamic request)
         {
-            var speech = BuildOutputSpeech(request);
+            IntentDispatcher(request);
 
             return new
             {
                 version = "1.0",
-                sessionAttributes = new { },
                 response = new
                 {
                     outputSpeech = new
                     {
                         type = "PlainText",
-                        text = speech
+                        text = speech,
                     },
                     card = new
                     {
@@ -31,27 +33,39 @@ namespace MyCityFacts_AZURE.Controllers
                         title = "MyCity Fact",
                         content = speech
                     },
-                    shouldEndSession = true
-                }
+                    shouldEndSession = reprompt.Length > 0 ? false : true
+                },
+                reprompt = new
+                {
+                    outputSpeech = new
+                    {
+                        type = "PlainText",
+                        text = reprompt
+                    },
+                    shouldEndSession = reprompt.Length > 0 ? false : true
+                },
+                sessionAttributes = new {}
             };
         }
 
-        private string BuildOutputSpeech(dynamic request)
+        private void IntentDispatcher(dynamic request)
         {
             switch ((string)request.intent.name)
             {
                 case "GetMyCityFactIntent":
-                    return "Here is your fact: " + GetRandomFact();
+                    speech = "Here is your fact: " + GetRandomFact();
+                    break;
 
                 case "AMAZON.CancelIntent":
                 case "AMAZON.StopIntent":
-                    return "OK";
+                    speech = "OK";
+                    break;
 
                 case "AMAZON.HelpIntent":
-                    return "Here is your help message";
-
                 default:
-                    return "Here is your help message";
+                    speech = "You can ask for a fact by saying, tell me a fact.";
+                    reprompt = "Try it! Just say tell me a fact.";
+                    break;
             }
         }
 
