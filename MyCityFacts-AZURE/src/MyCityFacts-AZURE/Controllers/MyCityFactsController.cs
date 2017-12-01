@@ -11,11 +11,13 @@ namespace MyCityFacts_AZURE.Controllers
     {
         String speech = "";
         String reprompt = "";
+        Boolean endSession = false;
 
         [HttpPost, Route("api/alexa/MyCityFacts")]
         public dynamic HandleRequest (dynamic request)
         {
             IntentDispatcher(request);
+            endSession = reprompt.Length > 0 ? false : true;
 
             return new
             {
@@ -25,7 +27,7 @@ namespace MyCityFacts_AZURE.Controllers
                     outputSpeech = new
                     {
                         type = "PlainText",
-                        text = speech,
+                        text = speech
                     },
                     card = new
                     {
@@ -44,13 +46,20 @@ namespace MyCityFacts_AZURE.Controllers
                     },
                     shouldEndSession = reprompt.Length > 0 ? false : true
                 },
-                sessionAttributes = new {}
+                sessionAttributes = new { }
             };
         }
 
         private void IntentDispatcher(dynamic request)
         {
-            switch ((string)request.intent.name)
+            var intentName = "";
+
+            if (request != null)
+            { 
+                intentName = (string)request.request.intent.name;
+            }
+
+            switch (intentName)
             {
                 case "GetMyCityFactIntent":
                     speech = "Here is your fact: " + GetRandomFact();
