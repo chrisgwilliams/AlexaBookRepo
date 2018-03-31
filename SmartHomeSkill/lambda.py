@@ -309,7 +309,8 @@ def lambda_handler(request, context):
 def handle_request(request):
     request_namespace = request["directive"]["header"]["namespace"]
     request_name = request["directive"]["header"]["name"]
-
+    request_value = request["directive"]["header"]["value"]
+	
     if request_namespace == "Alexa.PowerController":
         if request_name == "TurnOn":
             value = "ON"
@@ -348,6 +349,120 @@ def handle_request(request):
         }
         return response
 
+    elif request_namespace == "Alexa.ColorTemperatureController":
+        if request_name == "SetColorTemperature":
+            value = request_value
+        else:
+            value = "5600"
+
+        response = {
+            "context": {
+                "properties": [
+                    {
+                        "namespace": "Alexa.ColorTemperatureController",
+                        "name": "colorTemperatureInKelvin",
+                        "value": value,
+                        "timeOfSample": time.strftime("%Y-%m-%dT%H:%M:%S.00Z", time.gmtime(seconds)),
+                        "uncertaintyInMilliseconds": 500
+                    }
+                ]
+            },
+            "event": {
+                "header": {
+                    "namespace": "Alexa",
+                    "name": "Response",
+                    "payloadVersion": "3",
+                    "messageId": str(uuid.uuid4()),
+                    "correlationToken": request["directive"]["header"]["correlationToken"]
+                },
+                "endpoint": {
+                    "scope": {
+                        "type": "BearerToken",
+                        "token": "access-token-from-Amazon"
+                    },
+                    "endpointId": request["directive"]["endpoint"]["endpointId"]
+                },
+                "payload": {}
+            }
+        }
+        return response
+
+    elif request_namespace == "Alexa.BrightnessController":
+        if request_name == "SetPercentage":
+            value = request_value
+        else:
+            value = "100"
+
+        response = {
+            "context": {
+                "properties": [
+                    {
+                        "namespace": "Alexa.BrightnessController",
+                        "name": "brightness",
+                        "value": value,
+                        "timeOfSample": time.strftime("%Y-%m-%dT%H:%M:%S.00Z", time.gmtime(seconds)),
+                        "uncertaintyInMilliseconds": 500
+                    }
+                ]
+            },
+            "event": {
+                "header": {
+                    "namespace": "Alexa",
+                    "name": "Response",
+                    "payloadVersion": "3",
+                    "messageId": str(uuid.uuid4()),
+                    "correlationToken": request["directive"]["header"]["correlationToken"]
+                },
+                "endpoint": {
+                    "scope": {
+                        "type": "BearerToken",
+                        "token": "access-token-from-Amazon"
+                    },
+                    "endpointId": request["directive"]["endpoint"]["endpointId"]
+                },
+                "payload": {}
+            }
+        }
+        return response
+
+    elif request_namespace == "Alexa.PercentageController":
+        if request_name == "SetPercentage":
+            value = request_value
+        else:
+            value = "100"
+
+        response = {
+            "context": {
+                "properties": [
+                    {
+                        "namespace": "Alexa.PercentageController",
+                        "name": "brightness",
+                        "value": value,
+                        "timeOfSample": time.strftime("%Y-%m-%dT%H:%M:%S.00Z", time.gmtime(seconds)),
+                        "uncertaintyInMilliseconds": 500
+                    }
+                ]
+            },
+            "event": {
+                "header": {
+                    "namespace": "Alexa",
+                    "name": "Response",
+                    "payloadVersion": "3",
+                    "messageId": str(uuid.uuid4()),
+                    "correlationToken": request["directive"]["header"]["correlationToken"]
+                },
+                "endpoint": {
+                    "scope": {
+                        "type": "BearerToken",
+                        "token": "access-token-from-Amazon"
+                    },
+                    "endpointId": request["directive"]["endpoint"]["endpointId"]
+                },
+                "payload": {}
+            }
+        }
+        return response
+		
     elif request_namespace == "Alexa.Authorization":
         if request_name == "AcceptGrant":
             response = {
